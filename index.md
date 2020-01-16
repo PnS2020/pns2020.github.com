@@ -2,7 +2,7 @@
 layout: default
 ---
 
-This module instructs students on the basics of deep learning as well as building better and faster deep network classifiers for sensor data. The module is strongly project-based, with two main phases. In the first phase, students will learn the basics of deep learning and Computer Vision, e.g. stochastic gradient descent, multi-layer perceptron, convolutional neural networks, filtering, and corner detection. At the end of this first phase, students should be ready to run simple networks in TensorFlow and implement basic computer vision methods in Python. In the second phase, students will be divided into teams of 2 or 3. Each team will tackle a problem of their choosing, from fields such as computer vision, pattern recognition, distributed computing. Example projects include face recognition and emotion recognition.
+This module instructs students on the basics of deep learning as well as building better and faster deep network classifiers for sensor data. The module is strongly project-based, with two main phases. In the first phase, students will learn the basics of deep learning and Computer Vision, e.g. stochastic gradient descent, multi-layer perceptron, convolutional neural networks, filtering, and corner detection. At the end of this first phase, students should be ready to run simple networks in PyTorch and implement basic computer vision methods in Python. In the second phase, students will be divided into teams of 2 or 3. Each team will tackle a problem of their choosing, from fields such as computer vision, pattern recognition. Example projects include face recognition and emotion recognition.
 
 + __Instructor__: Prof. Shih-Chii Liu
 + __Language of Instruction__: English
@@ -13,16 +13,16 @@ This module instructs students on the basics of deep learning as well as buildin
 ---
 <div>
 <h2 align="center">
-    All materials are available at: <a href="https://github.com/PnS2019">https://github.com/PnS2019</a>
+    All materials are available at: <a href="https://github.com/PnS2019">https://github.com/PnS2020</a>
 </h2>
 </div>
 ---
 # Schedule
 
 + __Session__: Thursdays 1-5pm
-+ __Starting date__: February 28th, 2019
++ __Starting date__: TBD
 + __Place__: Institute of Neuroinformatics, Dungeon Lab, Y35 E 30, University Zürich Irchel Campus
-+ __Module ends__: May 30th, 2019
++ __Module ends__: TBD
 
 # [Session 01](./session_01.md)
 Basics of Linear Algebra (vector, matrix, tensors, etc), Introduction to Python, numpy basics, symbolic computation basics.
@@ -80,17 +80,7 @@ __Remark__: First-come-First-serve basis in selecting project.
 
 ## Timeline
 
-+ Week 5 (March 28th): Project Briefing
-
-+ Week 6 (April 4th): Assign project based on the team's decision. Assign team name based on the team's decision. Setup project, first group discussion on the plan to complete the project.
-
-+ Week 7-9 (April 11th - May 2rd): Collecting data, writing utility functions, first prototype by end of the 9th week. __No class on April 25th__
-
-+ Week 10 (May 9th, May 16th): Refine the model and implementation so that the system can run as fast as possible
-
-+ Week 11 (May 16th): Project presentation
-
-+ Week 12-13 (May 23th, May 30th): Project write up
+TBD
 
 # Acknowledgment
 
@@ -106,3 +96,4 @@ We would like to acknowledge the following resources:
 # Previous editions
 
 + [PnS2018](https://pns2018.github.io/): the first edition of the module focused on Deep Learning.
++ [PnS2019](https://pns2019.github.io/): the second edition of the module focused on Deep Learning.
