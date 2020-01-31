@@ -52,12 +52,8 @@ _If you have no idea about Machine Learning and Scientific Computing, I suggest 
 |[Unsupervised Feature Learning and Deep Learning Tutorial](http://deeplearning.stanford.edu/tutorial/)|AI Lab, Stanford University|
 |[CS231n: Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)|Stanford University|
 |[CS224d: Deep Learning for Natural Language Processing](http://cs224d.stanford.edu/)|Stanford University|
-|[Theano](http://deeplearning.net/software/theano/)|MILA Lab, University of Montreal|
-|[cuDNN](https://developer.nvidia.com/cuDNN)|NVIDIA|
 |[ConvNetJS](http://cs.stanford.edu/people/karpathy/convnetjs/index.html)|Andrej Karpathy|
-|[DeepLearning4j](http://deeplearning4j.org/)||
-|[Chainer: Neural network framework](http://chainer.org/)|Preferred Networks, Inc|
-|[Keras](https://keras.io/)|fchollet and active contributors|
-|[TensorFlow](http://tensorflow.org/)|TensorFlow Team|
 |[PyTorch](http://pytorch.org/)|PyTorch Team|
+|[TensorFlow](http://tensorflow.org/)|TensorFlow Team|
+|[Keras](https://keras.io/)|fchollet and active contributors|
 |[CoLaboratory](https://colab.research.google.com)|Google|
