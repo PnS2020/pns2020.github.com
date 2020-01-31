@@ -12,6 +12,8 @@ This section will only provide a brief introduction to Linear Algebra. For those
 
 __Remarks__: In this module, we do not emphasize the geometry aspects of the Linear Algebra. Instead, we use the relevant concepts for programing and computation.
 
+__Remarks__: Recently, Prof. Gilbert Strang published a new book [Linear Algebra and Learning from Data](https://math.mit.edu/~gs/learningfromdata/).
+
 ### Scalar, Vector, Matrix and Tensor
 
 [![CoLab](https://img.shields.io/badge/Reproduce%20in-CoLab-yellow.svg?style=flat-square)](https://colab.research.google.com/drive/1Kn1f-4uVO7eGV0QzqXiJ7ekWUATI53OB)
@@ -348,67 +350,63 @@ __Remarks__: Some of you might realize that we use `numpy` to manipulate `array`
 
 __Remarks__: For a more complete Python `numpy` Tutorial, please check [this document](http://cs231n.github.io/python-numpy-tutorial/) from Stanford CS231n class.
 
+__Remarks__: Can you figure out what does the following code mean?
+
+```python
+a = np.zeros((0, 10))
+```
+
 ## Basic Symbolic Computation
 
-[![CoLab](https://img.shields.io/badge/Reproduce%20in-CoLab-yellow.svg?style=flat-square)](https://colab.research.google.com/drive/1eJD3d2WiVjIusi63m8uCs-9Ti_88tcFm)
+[![CoLab](https://img.shields.io/badge/Reproduce%20in-CoLab-yellow.svg?style=flat-square)](https://colab.research.google.com/drive/180zH8mevFZ7MNCApDnWd4CgIueo-qjjX)
 
 While classical computing (numerical computing) defines variables and uses operations to modify their values, symbolic computation defines a graph of operations on symbols, which can be substituted for values later.
 These operations can include addition, subtraction, multiplication, matrix multiplication, differentiation, exponentiation, etc.
 
 Every operation takes as input symbols (tensors), and outputs symbols that can be further operated upon.
 
-In this module, we will use [TensorFlow](https://www.tensorflow.org/), a dedicated machine learning framework based on symbolic computation. Specifically, we use the official high-level API -- Keras.
+In this module, we will use [PyTorch](https://www.tensorflow.org/), a dedicated machine learning framework based on symbolic computation.
 
-__Remarks__: [Keras](https://keras.io/) is an open source project that was dedicated to providing a clean yet efficient high-level API that unifies several different frameworks. Keras has become the official high-level abstraction layer of TensorFlow and has been deeply fused into recent TensorFlow releases. Therefore, for this module, we choose to use Keras in TensorFlow to get better support and performance.
+__Remarks__: Almost all modern Deep Learning libraries follows the principles of symbolic computation including TensorFlow, PyTorch, MXNET, etc.
 
-__Remarks__: Almost all modern Deep Learning libraries follows the principles of symbolic computation including Theano, TensorFlow, PyTorch, MXNET, Chainer, etc.
-
-First let us import the backend functions of Keras in python and implement some basic operations.
+First let us import PyTorch in python and implement some basic operations.
 
 ```python
-import numpy as np
-from tensorflow.keras import backend as K
-```
-Now initialize two input scalars (shape () tensors) which can then be added together. Placeholders are basic tensor variables which can later be substituted with `numpy` arrays during the evaluation of the further operations.
-```python
-input_1 = K.placeholder(shape=())
-input_2 = K.placeholder(shape=())
-
-print(input_1)
-
-inputs_added = input_1 + input_2
-
-print(inputs_added)
+import torch
+from torch.nn import Module
 ```
 
-Now we can instantiate an add function from the symbols created above.
+In this example, we would like to implement an add function that
+adds two tensors together. In PyTorch, we can implement the function in
+the following way:
 
 ```python
-add_function = K.function(inputs=[input_1, input_2],
-                          outputs=[inputs_added])
-print(add_function)
+class AddFunc(Module):
+    """the add function."""
+    def __init__(self):
+        super(AddFunc, self).__init__()
+
+    def forward(self, input_1, input_2):
+        return input_1+input_2
 ```
 
-This add function takes on two scalars as inputs and returns a scalar as an output.
-
+Now, let's try to add two scalars together first
 ```python
-add_function((37, 42))
+add_func = AddFunc()
+
+a = 37
+b = 42
+
+print(add_func(a, b))
 ```
 
-Similarly, you can also add two matrices of the same shape instead of scalars.
+Similarly, you can also add two vectors of the same shape instead of scalars.
 
 ```python
+a = torch.tensor([1,2,3,4,5], dtype=torch.float)
+b = torch.tensor([6,7,8,9,10], dtype=torch.float)
 
-input_1 = K.placeholder(shape=(2, 2))
-input_2 = K.placeholder(shape=(2, 2))
-
-inputs_added = input_1 + input_2
-
-add_function = K.function(inputs=[input_1, input_2],
-                          outputs=[inputs_added])
-
-add_function((np.array([[1, 3], [2, 4]]),
-              np.array([[3, 2], [5, 6]])))
+print(add_func(a, b))
 ```
 
 The above code represents a _computation graph_ which takes two inputs and gives one output (see a graphical example below).
@@ -422,128 +420,75 @@ The above code represents a _computation graph_ which takes two inputs and gives
 
 ---
 
-Computation graph is the essential concept of symbolic computation where the tensors in this case define the steps of the computation and the graph compilation (achieved by `K.function` API) turns the graph into a __function__. Note that before compiling, the elements in the graph are merely symbols. The main advantage of using symbolic computation is _automatic differentiation_ which can be directly derived from a graph. Almost all training algorithms in
-deep learning rely on this powerful technique.
+Computation graph is the essential concept of symbolic computation where the `forward` function in this case define the steps of the computation and the graph compilation turns the graph into a __function__. The main advantage of using symbolic computation is _automatic differentiation_ which can be directly derived from a graph. Almost all training algorithms in
+Deep Learning rely on this powerful technique.
 
-For this, we need to get acquainted with `keras` variables. While `keras` placeholders are a way to instantiate tensors, they are placeholder tensors for users to substitute values into to carry out their intended computation.
-Variables are tensors that have initial values.
-
-```python
-# we redefine the input_1 and input_2 tensors
-input_1 = K.placeholder(shape=(2, 2))
-input_2 = K.placeholder(shape=(2, 2))
-
-# variable can be initialized with a value like this
-init_variable_1 = np.zeros(shape=(2, 2))
-variable_1 = K.variable(value=init_variable_1)
-
-# variable can also be initialized with particular functions like this
-variable_2 = K.ones(shape=(2, 2))
-
-add_tensor = input_1*variable_1+input_2*variable_2
-
-print("Variable 1:", variable_1)  # note that it doesn't print the value contained
-print("Added tensors together:", add_tensor)
-
-# notice the difference in the types, one is a variable tensor
-# while the other is just a tensor
-
-# we can evaluate the value of variables like this
-print("Values in variable 1:", K.eval(variable_1))
-print("Values in variable 2:", K.eval(variable_2))
-
-# we can create the add function from the add_tensor just like before
-
-add_function = K.function(inputs=[input_1, input_2],
-                          outputs=[add_tensor])
-
-print(add_function((np.array([[1, 3], [2, 4]]),
-                    np.array([[3, 2], [5, 6]]))))
-# notice that the add_function created is independent of the variables
-# the value of variables created is not affected
-
-print("Variable 1:", K.eval(variable_1))
-print("Variable 2:", K.eval(variable_2))
-
-# we can set the value of variables like this
-K.set_value(x=variable_1, value=np.array([[1, 3], [2, 4]]))
-
-print("Variable 1 after change:", K.eval(variable_1))
-
-# notice that the change in variable_1 is reflected when you call add_function again
-
-print(add_function((np.array([[1, 3], [2, 4]]),
-                    np.array([[3, 2], [5, 6]]))))
-```
-
-__Remarks__: As defined in the `function` API, the input tensors have to be a list of placeholders. TensorFlow's Keras strictly follows this definition. However, the original Keras does not care if the input tensors are placeholders or variables. This is a bug of current TensorFlow since `function` could run without warning when variables are passed as input. See [here](https://github.com/tensorflow/tensorflow/issues/25764).
-
+__Remarks__: You might think, why is it so complicated to define a simple function like `add`? Certainly there are ways that contain less lines of code. However, this paradigm of constructing computation graph is widely used
+in defining neural networks in later sessions.
 
 We can also compute more than one thing at the same time by using multiple outputs. Say we want to add two tensors, subtract two tensors, perform an element-wise squaring operation on one of the tensors and get the element-wise exponential of the other tensor.
 
 ```python
-# we redefine the input_1 and input_2 tensors
-input_1 = K.placeholder(shape=(2, 2))
-input_2 = K.placeholder(shape=(2, 2))
+class MultiFuncs(Module):
+    """get multiple outputs."""
+    def __init__(self):
+        super(MultiFuncs, self).__init__()
 
-add_tensor = input_1 + input_2
-subtract_tensor = input_1 - input_2
-square_1_tensor = input_1 ** 2
-exp_2_tensor = K.exp(input_2)
+    def forward(self, input_1, input_2):
+        add = input_1+input_2  # add two tensors
+        subtract = input_1-input_2  # subtract two tensor
+        square_input_1 = input_1**2  # square the input_1
+        exp_input_2 = torch.exp(input_2)  # e^input_2
+        return add, subtract, square_input_1, exp_input_2
 
-multiple_output_function = K.function(inputs=(input_1, input_2),
-                                      outputs=[add_tensor,
-                                               subtract_tensor,
-                                               square_1_tensor,
-                                               exp_2_tensor])
+# define inputs
+input_1 = torch.tensor([[1, 2], [3, 4]], dtype=torch.float)
+input_2 = torch.tensor([[5, 6], [7, 8]], dtype=torch.float)
 
-multiple_output_function((np.array([[1, 3], [2, 4]]),
-                          np.array([[3, 2], [5, 6]])))
+multi_funcs = MultiFuncs()
+
+print(multi_funcs(input_1, input_2))
 ```
 
-Now we can get to the important part of differentiating with respect to the variables. Once we have created the variables and performed operations of interest on them, we would like to get the gradients of the output symbols from those operations with respect to the variables.
+Now we can get to the important part of differentiating with respect to the variables. Let's try to compute the following example with PyToch
+
+
+$$
+\begin{aligned}
+\mathbf{x} &= \{x_{1}, \ldots, x_{i}, \ldots, x_{N}\} \\
+\mathbf{y} &= \{y_{1}, \ldots, y_{i}, \ldots, y_{N}\} \\
+z &= \sum_{i=1}^{N}x_{i}^{2}+\sum_{i=1}^{N}y_{i}^{2} \\
+\frac{\text{d} z}{\text{d}{\mathbf{x}}} &= ? \\
+\frac{\text{d} z}{\text{d}{\mathbf{y}}} &= ?
+\end{aligned}
+$$
 
 ```python
-# we redefine the input_1 and input_2 tensors
-input_1 = K.placeholder(shape=(2, 2))
-input_2 = K.placeholder(shape=(2, 2))
+class GradientExp(Module):
+    """Gradient Example."""
+    def __init__(self):
+        super(GradientExp, self).__init__()
 
-variable_1 = K.ones(shape=(2, 2))
-variable_2 = K.ones(shape=(2, 2))
+    def forward(self, input_1, input_2):
+        return (input_1**2).sum()+(input_2**2).sum()
 
+grad_exp = GradientExp()
 
-square_1_tensor = input_1*variable_1**2+input_2*variable_2**2
-exp_tensors_added = K.exp(input_1*variable_1) + K.exp(input_2*variable_2)
+input_1 = torch.tensor([1, 2, 3, 4, 5], dtype=torch.float, requires_grad=True)
+input_2 = torch.tensor([6, 7, 8, 9, 10], dtype=torch.float, requires_grad=True)
 
-# we can compute the gradients with respect to a single variable or
-# a list of variables
+output = grad_exp(input_1, input_2)
 
-# computing the gradient of square_1_tensor with respect to variable_1
-grad_1_tensor = K.gradients(loss=square_1_tensor, variables=[variable_1])
+output.backward()
 
-# computing the gradient of square_1_tensor with respect to variable_2
-grad_2_tensor = K.gradients(loss=square_1_tensor, variables=[variable_2])
-
-# computing the gradient of exp_tensors_added with respect to both
-# variable_1 and variable_2
-grad_3_tensor = K.gradients(loss=exp_tensors_added,
-                            variables=[variable_1,
-                                       variable_2])
-
-# we can now create functions corresponding to these operations
-grad_functions = K.function(inputs=[input_1, input_2],
-                            outputs=[grad_1_tensor[0],
-                                     grad_3_tensor[0],
-                                     grad_3_tensor[1]])
-
-grad_functions((np.array([[1, 3], [2, 4]]),
-                np.array([[3, 2], [5, 6]])))
+print(input_1.grad)  # dz/dx
+print(input_2.grad)  # dz/dy
 ```
 
-__Remarks__: The complete API reference is available at [Keras documentation for backend](https://keras.io/backend/).
+__Remarks__: The complete API reference is available at [PyTorch documentation ](https://pytorch.org/docs/stable/index.html).
 
 In this session, we learned basic ideas in symbolic computation.
-Some of you may have heard that another popular library [PyTorch](https://pytorch.org/) is even easier to use than TensorFlow. PyTorch uses a framework called _dynamic computation graph_ which can generate the graph on the fly. This means that it is closer to our old programming paradigm. However, to think the computing differently, in this module we keep using the _static_ computation graph.
+Some of you may have heard that another popular library [TensorFlow](https://www.tensorflow.org/). TensorFlow is very popular in the industry.
 
 ### Exercises
 
