@@ -36,21 +36,9 @@ a Python distribution that is built for Scientific Computing.
 
 ### Miniconda setup instructions
 
-1. Open a terminal and download Miniconda
+1. Download Miniconda for your system.
 
-    ```bash
-    $ wget https://repo.anaconda.com/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O miniconda.sh  # for Linux
-    ```
-
-    ```bash
-    $ curl https://repo.anaconda.com/miniconda/Miniconda3-4.5.4-MacOSX-x86_64.sh -o miniconda.sh  # for macOS
-    ```
-
-2. Install Miniconda
-
-    ```bash
-    $ bash ./miniconda.sh
-    ```
+2. Install Miniconda by following [this instructions](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation)
 
     Follow the instructions and make sure Miniconda is added in your bash configuration file such as `.bashrc` or `.zshrc`.
 
@@ -63,13 +51,22 @@ a Python distribution that is built for Scientific Computing.
     >>> 
     ```
 
-__Remark__: For Windows OS, please read the installation instruction [here](https://conda.io/docs/user-guide/install/windows.html). Or, remove your Windows and install Linux.
+4. Create an new environment for this module
+
+    ```bash
+    conda create -n pns2020 python=3.6
+    ```
+
+    To use this environment, type this in your terminal
+    ```bash
+    source activate pns2020
+    ```
 
 ## Which Python Version Should I Use?
 
 Python 3.6
 
-__Remark__: Python 3.6 has gained full support from the scientific community. Python 2.7 was the default choice of the module. However, as Python 2's support will be ended soon, we choose Python 3.5/3.6 as the default Python version for this edition.
+__Remark__: The support of Python 2.7 has ended. Do not use Python 2.7.
 
 __Remark__: Do not use Python 3.7 for now as many softwares don't have support for this version yet.
 
@@ -136,20 +133,20 @@ Therefore, we advise that you do not use Jupyter Notebook.
 
 ### What do you need from an IDE?
 
-+ __Code auto-completion__: Let's face it, no one is gonna remember hundreds or even thousands of commands.
++ __Code auto-completion__: Let's face it, no one is gonna remember hundreds or even thousands of APIs.
 + __Code navigation__: If you want to check on some definitions or files, you need to get there fast.
 + __Running the code__: It should be easy to run the code.
 + __Debugging__: If there is anything wrong with the code, you should be able to find out which line is doing things wrongly.
 + __Source code version control__: Make sure your code is maintained and updated in a timely and efficient manner.
 + __Static code checker__: Modern software engineering promotes the idea of producing high-quality _human readable_ code. Over the years, people have transformed specific coding styles into a static code checker where the checker evaluates your code formatting and corrects obvious errors.
 
-### Atom
-
-[Atom](https://atom.io/) is a very popular text editor that is built and maintained mainly by GitHub. This editor is modern and naturally integrates some of the best software engineering practices. You can find tons of additional packages that help you configure the editor to a Python IDE.
-
 ### PyCharm
 
 [PyCharm](https://www.jetbrains.com/pycharm/) is a new Python IDE that has a beautiful interface and integrates all the features you will need for developing a Python project.
+
+### Atom
+
+[Atom](https://atom.io/) is a very popular text editor that is built and maintained mainly by GitHub. This editor is modern and naturally integrates some of the best software engineering practices. You can find tons of additional packages that help you configure the editor to a Python IDE.
 
 ### Eclipse+PyDev
 
@@ -157,8 +154,8 @@ If you are a [Eclipse](http://www.eclipse.org/) user, perhaps you would be happy
 
 ### Vim
 
-For the experienced user, we recommend [Vim](https://www.vim.org/) or its community-driven fork [neovim](https://neovim.io/). By configuring Vim, you will be able to get a fast editor that has all the IDE features you want while being lightweight in some sense. Additionally, Vim is a very flexible editor which allows you to efficiently do more things compared to other editors.
+For the experienced user, we recommend [Vim](https://www.vim.org/) or its community-driven fork [neovim](https://neovim.io/). By configuring Vim, you will be able to get a fast editor that has all the IDE features you want while being lightweight. Additionally, Vim is a very flexible editor which allows you to efficiently do more things compared to other editors.
 
 ## Further Readings
 
-+ [NSC-GPU-GUIDE](https://github.com/duguyue100/NSC-GPU-GUIDE): this repository contains some setup scripts that we use at INI for setting up computing resources for master students. The target system is Ubuntu 16.04.
++ [NSC-GPU-GUIDE](https://github.com/duguyue100/NSC-GPU-GUIDE): this repository contains some setup scripts that we use at INI for setting up computing resources for master students.
