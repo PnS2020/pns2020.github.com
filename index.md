@@ -25,7 +25,7 @@ This module instructs students on the basics of deep learning as well as buildin
 + __Module ends__: TBD
 
 # [Session 01](./session_01.md)
-Basics of Linear Algebra (vector, matrix, tensors, etc), Introduction to Python, numpy basics, symbolic computation basics.
+Basics of Linear Algebra (vector, matrix, tensors, etc), introduction to Python, `numpy` basics, symbolic computation basics.
 
 # [Session 02](./session_02.md)
 Brief introduction to Linear Regression, Logistic Regression, Stochastic Gradient Descent and its variants.
@@ -51,9 +51,9 @@ Advanced techniques of Computer Vision such as filtering, corner detection, keyp
 
 # Projects
 
-+ __Baby Jarvis__: Implement a face recognition system using Keras, OpenCV, and Raspberry Pi. The device will voice the name of the face it sees. (Difficulty: 5)
++ __Baby Jarvis__: Implement a face recognition system using PyTorch, OpenCV, and Raspberry Pi. The device will voice the name of the face it sees. (Difficulty: 5)
 
-+ __Baby Jarvis II__: Distinguish between happy and sad faces using Keras, OpenCV and Raspberry Pi. (Difficulty: 5)
++ __Baby Jarvis II__: Distinguish between happy and sad faces using PyTorch, OpenCV and Raspberry Pi. (Difficulty: 5)
 
 + __Baby Jarvis III__: Proof-of-concept driver monitoring system by detecting if the user is sleeping, checking the phone or doing other reckless activities while driving. (Difficulty: 6)
 
@@ -61,10 +61,6 @@ Advanced techniques of Computer Vision such as filtering, corner detection, keyp
 
 + __Which station is this?__: Take a picture of the station name, recognize the
 station and find the position from Google Maps! (Difficulty: 7)
-
-+ __Implementing backpropagation__: Implement the backpropagation method in basic python without relying on any high level APIs like Keras or Tensorflow. (Difficulty: 7)
-
-+ __(Advanced) Paper Piano__: Print the piano key on a paper, use CV techniques to identify which key is pressed and play the sound. (Difficulty: 8)
 
 + __(Advanced) Raspberry that talks__: Analyse an image via image captioning, then broadcast the information to a speaker. (Difficulty: 8)
 
