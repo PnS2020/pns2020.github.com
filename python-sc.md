@@ -142,7 +142,7 @@ Therefore, we advise that you do not use Jupyter Notebook.
 
 ### PyCharm
 
-[PyCharm](https://www.jetbrains.com/pycharm/) is a new Python IDE that has a beautiful interface and integrates all the features you will need for developing a Python project.
+[PyCharm](https://www.jetbrains.com/pycharm/) is a Python IDE that has a beautiful interface and integrates all the features you will need for developing a Python project.
 
 ### Atom
 
