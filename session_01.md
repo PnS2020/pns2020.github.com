@@ -487,15 +487,12 @@ print(input_2.grad)  # dz/dy
 
 __Remarks__: The complete API reference is available at [PyTorch documentation ](https://pytorch.org/docs/stable/index.html).
 
-In this session, we learned basic ideas in symbolic computation.
-Some of you may have heard that another popular library [TensorFlow](https://www.tensorflow.org/). TensorFlow is very popular in the industry.
-
 ### Exercises
 
-1. Create three symbolic placeholder vectors of length 5 (shape `(5,)` tensors) $$\mathbf{a}$$, $$\mathbf{b}$$ and $$\mathbf{c}$$; then create a function to compute the expression $$\mathbf{a}^2 + \mathbf{b}^2 + \mathbf{c}^2 + 2\mathbf{b}\mathbf{c}$$. (Element-wise multiplication)
+1. Create a function to compute the expression $$\mathbf{a}^2 + \mathbf{b}^2 + \mathbf{c}^2 + 2\mathbf{b}\mathbf{c}$$. (Element-wise multiplication)
 
-1. Create a scalar placeholder $$x$$ and compute the $$\tanh$$ function on $$x$$ using the exponential function (__DO NOT USE `K.tanh` API__). Then compute the derivative of the $$\tanh$$ with respect to $$x$$ using the gradients function. Invoke the functions with the values -100, -1, 0, 1 and 100 to analyze the function and its derivative.
+1. Create a tensor scalar $$x$$ and compute the $$\tanh$$ function on $$x$$ using the exponential function (__DO NOT USE `torch.nn.functional.tanh` API__). Then compute the derivative of the $$\tanh$$ with respect to $$x$$. Invoke the functions with the values -100, -1, 0, 1 and 100 to analyze the function and its derivative.
 
-1. Create shape `(2,)` variable $$\mathbf{w}$$ and the shape `(1,)` variable $$\mathbf{b}$$. Create shape `(2,)` placeholder $$\mathbf{x}$$. Now create the function corresponding to $$f(z) = \frac{1}{1+e^{-z}}$$ where $$z=w_0\times x_0+w_1\times x_1+b_0$$ and compute the gradient with respect to $$\mathbf{w}$$. Analyse the implemented operation. Then see how the function and the gradient behave for different values of the variables and the placeholder.
+1. Create shape `(2,)` tensor $$\mathbf{w}$$ and the shape `(1,)` variable $$\mathbf{b}$$. Create shape `(2,)` placeholder $$\mathbf{x}$$. Now create the function corresponding to $$f(z) = \frac{1}{1+e^{-z}}$$ where $$z=w_0\times x_0+w_1\times x_1+b_0$$ and compute the gradient with respect to $$\mathbf{w}$$. Analyse the implemented operation. Then see how the function and the gradient behave for different values of the variables and the placeholder.
 
-1. For an arbitrary $$n$$, create an $$n$$-degree polynomial for an input scalar variable $$\mathbf{x}$$ with $$(n+1)$$ variables and compute the gradients of the polynomial with respect to each of the variables.
+1. For an arbitrary $$n$$, create an $$n$$-degree polynomial for an input scalar $$\mathbf{x}$$ with $$(n+1)$$ variables and compute the gradients of the polynomial with respect to each of the variables.
