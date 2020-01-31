@@ -38,7 +38,7 @@ a Python distribution that is built for Scientific Computing.
 
 1. Download Miniconda for your system.
 
-2. Install Miniconda by following [this instructions](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation)
+2. Install Miniconda by following [instructions](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation)
 
     Follow the instructions and make sure Miniconda is added in your bash configuration file such as `.bashrc` or `.zshrc`.
 
@@ -51,15 +51,15 @@ a Python distribution that is built for Scientific Computing.
     >>> 
     ```
 
-4. Create an new environment for this module
+4. Create an new environment for this module in your terminal
 
     ```bash
-    conda create -n pns2020 python=3.6
+    $ conda create -n pns2020 python=3.6
     ```
 
-    To use this environment, type this in your terminal
+    To use this environment, type this in the terminal
     ```bash
-    source activate pns2020
+    $ source activate pns2020
     ```
 
 ## Which Python Version Should I Use?
