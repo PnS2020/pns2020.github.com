@@ -16,7 +16,7 @@ At which problem depth does _Shallow Learning_ end, and _Deep Learning_ begin? D
 
 __Remark__: We encourage you to check out this fascinating review of Deep Learning.
 
-Instead of the term "deep", "hierarchical" might be more suitable. However, modern (in the last two years) DL models cannot simply be characterized by "hierarchical" anymore (e.g., Neural Turning Machine models).
+Instead of the term "deep", "hierarchical" might be more suitable. However, modern DL models cannot simply be characterized by "hierarchical" anymore (e.g., Neural Turning Machine models).
 
 The second part of the name, "Learning", is also a misleading word. The "learning" process (via training) intends to improve the generalization in unseen examples. However, the concept does not associate with "learning" in the biological sense. The entire "learning" process is carried out by some powerful optimization algorithms (we call them "training" algorithms).
 
@@ -110,10 +110,8 @@ $$
 A Keras example is as follows:
 
 ```python
-from tensorflow.keras.layers import Dense, Activation
+from torch.nn import Linear, ReLU
 
-x = Dense(100)(x)  # the layer has 100 neuron
-x = Activation("relu")(x)  # the activation function is ReLU
 ```
 
 ---
