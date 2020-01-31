@@ -46,19 +46,19 @@ The performance measure $$P$$ is usually specific to the task $$T$$ (e.g. accura
 
 ### The experience $$E$$
 
-Experience is what learning algorithms are allowed to have during the learning process. The experience is usually an _dataset_ that is a collection of _examples_. Normally, we call this dataset as the _training dataset_. Here we give the structure of the training dataset to Unsupervised Learning and Supervised Learning algorithms.
+Experience is what learning algorithms are allowed to have during the learning process. The experience is usually an _dataset_ that is a collection of _samples. Normally, we call this dataset as the _training dataset_. Here we give the structure of the training dataset to Unsupervised Learning and Supervised Learning algorithms.
 
 + _Unsupervised Learning algorithms_ experience a dataset containing many features, learning useful structure of the dataset (estimate $$\Pr(\mathbf{x})$$).
 
 + _Supervised Learning algorithms_ experience a dataset containing features, but each example is also associated with a _label_ or _target_ (estimate $$\Pr(\mathbf{y}\vert\mathbf{x})$$).
 
-__Remark__: In most real world cases, we would not have access to the _testing dataset_ and the _validation dataset_. In the absence of the _validation dataset_, we usually split 20% of the training dataset to be the _validation dataset_.
+__Remark__: In most real world cases, we would not have access to the _testing dataset_. In the absence of the _validation dataset_, we usually split 20% of the training dataset to be the _validation dataset_.
 
 ### Hypothesis Function
 
 Mathematically, this computer program with respect to the learning task $$T$$ can be defined
 as a hypothesis function that takes an input $$\mathbf{x}$$ and transforms it to
-an output $$\mathbf{y}$$.
+an output $$\mathbf{y}$$ (e.g., in a translation task, $$\mathbf{x}$$ = "danke", $$\mathbf{y}$$ = "thanks").
 
 $$\mathbf{y}=f(\mathbf{x}; \theta)$$
 
@@ -81,12 +81,11 @@ When the cost function is differentiable (such as in DNNs presented in this modu
 Particularly, Gradient Descent (Cauchy, 1847) and its variants, such as
 RMSprop (Tieleman & Hinton, 2012), Adagrad (Duchi et al., 2011), Adadelta
 (Zeiler, 2012), Adam (Kingma & Ba, 2014) are surprisingly good at training
-Deep Learning models and have dominated the development of training algorithms. Software libraries such as `Theano` (Theano Development Team, 2016)
-and `TensorFlow` (Abadi et al., 2015) have automated the process of computing the gradient (the most difficult part of applying gradient descent) using
+Deep Learning models and have dominated the development of training algorithms. Software libraries have automated the process of computing the gradient (the most difficult part of applying gradient descent) using
 a symbolic computation graph. This automation enables the researchers to
 design and train arbitrary learning models.
 
-__Remark__: in this module, we use the term "cost function", "objective function" and "loss function" interchangeably. Usually, we also use the term $$J$$ and $$\mathcal{L}$$ interchangeably.
+__Remark__: in this module, we use the term "cost function", "objective function" and "loss function" interchangeably. Usually, we also use the terms $$J$$ and $$\mathcal{L}$$ interchangeably.
 
 ### Ingredients to Solve a Machine Learning Task
 
@@ -107,7 +106,7 @@ In this module, we will identify these ingredients while solving different tasks
 
 Regression is a task of Supervised Learning. The goal is to take an input vector $$\mathbf{x}\in\mathbb{R}^{n}$$ (a.k.a, features) and predict a target value $$y\in\mathbb{R}$$. In this section, we will learn how to implement _Linear Regression_.
 
-As the name suggests, Linear Regression has a hypothesis function that is a linear function. The goal is to find a linear relationship between the input features and the target value:
+As the name suggests, Linear Regression has a hypothesis function which is a linear function. The goal is to find a linear relationship between the input features and the target value:
 
 $$
 \begin{aligned}
@@ -118,15 +117,14 @@ $$
 
 Note that $$\{\mathbf{x}^{(i)}, y^{(i)}\}$$ is the $$i$$-th sample in the dataset $$\{\mathcal{X}, \mathbf{y}\}$$ that has $$N$$ data points. The parameters $$\theta=\{\mathbf{w}, b\}$$ consists of weights $$\mathbf{w}$$ and a bias $$b$$.
 
-Suppose that the target value is a scalar ($$y^{(i)}\in\mathbb{R}$$), we can easily define such a model in Keras:
+Suppose that the target value is a scalar ($$y^{(i)}\in\mathbb{R}$$), we can easily define such a model in PyTorch:
 
 ```python
-from tensorflow.keras.layers import Input, Dense
-from tensorflow.keras.models import Model
+import torch
+from torch.nn import Linear
 
-x = Input((10,), name="input layer")  # the input feature has 10 values
-y = Dense(1, name="linear layer")(x)  # implement linear function
-model = Model(x, y)  # compile the hypothesis function
+# the model has 10-dimensional input and 1 dimensional output
+model = Linear(in_features=10, out_features=1, bias=True)
 ```
 
 To find a linear relationship that has $$y^{(i)}\approx f(\mathbf{x}^{(i)};\theta)$$, we need to find a set of parameters $$\theta^{\star}$$ from the parameter space $$\theta$$ where the optimized function $$f(\mathbf{x};\theta^{\star})$$ generates the smallest possible error. Supposing we have a cost function $$J$$ that measures the error made by the hypothesis function, our goal can be formulated into:
@@ -201,13 +199,26 @@ $$
 Note that there is a close tie between the Logistic Regression and the Linear Regression. The Logistic Regression is nothing more than adding a non-linear function on top of the linear function. Here is an example of logistic regression in Keras:
 
 ```python
-from tensorflow.keras.layers import Input, Dense, Activation
-from tensorflow.keras.models import Model
+import torch
+from torch.nn import Linear, Sigmoid, Module
 
-x = Input((10,), name="input_layer")
-y = Dense(1, name="linear layer")(x)
-y = Activation("sigmoid")(y)
-model = Model(x, y)
+class LR(Module):
+    def __init__(self, in_features, out_features, bias=True):
+        super(LR, self).__init__()
+        self.layer = Linear(in_features=in_features, out_features=out_features,
+                            bias=bias)
+        
+        self.act = Sigmoid()
+    
+    def forward(self, x):
+        out = self.layer(x)
+        out = self.act(x)
+
+        return out
+
+# there are 10 input features
+# and 1 output feature
+model = LR(in_features=10, out_features=1, bias=True)
 ```
 
 __Remark__: we will revisit the logistic function in Session 3 when we introduce the first neural network model: the Multi-layer Perceptron.
@@ -239,16 +250,34 @@ $$
 Here is a Keras example
 
 ```python
-from tensorflow.keras.layers import Input, Dense, Activation
-from tensorflow.keras.models import Model
+import torch
+from torch.nn import Linear, Softmax, Module
 
-x = Input((10,), name="input_layer")
-y = Dense(5, name="linear layer")(x)  # suppose there are 5 classes
-y = Activation("softmax")(y)
-model = Model(x, y)
+class SoftmaxRegression(Module):
+    def __init__(self, in_features, out_features, bias=True):
+        super(SoftmaxRegression, self).__init__()
+        self.layer = Linear(in_features=in_features, out_features=out_features,
+                            bias=bias)
+        
+        self.act = Softmax(dim=-1)
+    
+    def forward(self, x):
+        out = self.layer(x)
+        out = self.act(x)
+
+        return out
+
+# suppose there are 5 classes
+model = SoftmaxRegression(in_features=10, out_features=5, bias=True)
 ```
 
 __Remark__: Although we do not explain the Softmax Regression in detail, in fact, the function is widely used by many modern deep learning systems for solving fundamental problems such as classification, and complicated tasks such as neural machine translation.
+
+__Remark__: Note that in the loss functions of the Logistic Regression and
+the Softmax Regression computes __log__ likelihood. Hence, in order
+to make less numerical error, we normally do not apply the sigmoid function
+or the softmax function during the training. And the network outputs without
+applying these functions are called _logits_.
 
 ## Stochastic Gradient Descent and its Variants
 
@@ -323,40 +352,120 @@ __Remark__: SGD and its variants represent the most popular group of training al
 
 __Remark__: Sebastian Ruder surveyed almost all popular variants of SGDs in a [blog post](http://ruder.io/optimizing-gradient-descent/index.html).
 
-### Training a model in Keras
+### Training a model in PyTorch
 
-After you have defined a model by using the `Model` class (see above model examples for linear regression, logistic regression, and softmax regression), you will need to compile the model with some loss function and an optimizer. In Keras, we can use the `compile` API:
+#### Setting up the dataset
 
-```python
-model.compile(loss="mean_squared_error",
-              optimizer="sgd",
-              metrics=["mse"])
-```
-
-The above example compiled a Linear Regression model that uses MSE as the loss function and the default SGD as the optimizer. The performance measure $$P$$ here is called `metrics`. You can have different metrics for evaluating the performance of the model. We also use MSE as the metric for evaluation. If you have a classification task, you can change the `loss` and `metrics` to other options. You can find more about [losses](https://keras.io/losses/) and [metrics](https://keras.io/metrics/) in the Keras documentation.
-
-You can then train the model with the data once the model is compiled. Here is an example:
+To train a model, we need to prepare the data pipeline for feeding
+the training dataset and the validation dataset.
+With PyTorch, we can first define the data fetching for a single sample.
 
 ```python
-model.fit(
-    x=train_X, y=train_y,
-    batch_size=64, epochs=10,
-    validation_data=(test_X, test_y))
+from torch.utils.data import Dataset
+
+class LRDataset(Dataset):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __getitem__(self, index):
+        return self.x[index], self.y[index]
+
+    def __len__(self):
+        return self.x.shape[0]
 ```
 
-The API `fit` essentially takes your training data and schedules them into a training routine. First, you need to specify your training inputs `x` and training target `y`. And then you will need to define the mini-batch size and number of epochs. The `fit` API will run for a number of `epochs` and at each step of a epoch, the function will fetch a batch of training examples (in this case, 64) and then use them to compute the gradient update. The parameters are updated after the
+Then, we will need to use a Data Loader to schedule for batching data:
+
+```python
+from torch.utils.data import DataLoader
+
+# note that we shuffle the training data
+train_dataset = DataLoader(LRDataset(train_x, train_y), batch_size=32,
+                           shuffle=True, num_workers=4)
+# note that we do not shuffle the validation data
+valid_dataset = DataLoader(LRDataset(valid_x, valid_y), batch_size=32,
+                           shuffle=False, num_workers=4)
+```
+
+#### Define Optimization
+
+After you have defined a model (see above model examples for linear regression, logistic regression, and softmax regression), you will need to identify the optimizer, the loss function and the metric:
+
+```python
+from torch.nn import BCELoss
+from torch.optim import SGD
+
+# define optimizer
+optimizer = SGD(params=model.parameters(), lr=0.001)
+# Binary cross-entropy loss for Logistic Regression
+loss_fn = BCELoss()
+
+# define the accuracy as a function
+def Accuracy(y, y_pred):
+    num_samples = y.shape[0]
+    
+    accuracy = (y==pred).sum()/float(num_samples)
+
+    return accuracy
+```
+
+The above example sets up a Logistic Regression model that uses BCE as the loss function and the default SGD as the optimizer. The performance measure $$P$$ here is called `metrics`. You can have different metrics for evaluating the performance of the model. We use accuracy as the metric for evaluation.
+In the case of regression tasks, one could use MSE for both the loss function and the metric.
+
+#### Training in epochs
+
+First, you need to specify your training inputs `x` and training target `y`. And then you will need to define the mini-batch size and number of epochs. The `fit` API will run for a number of `epochs` and at each step of a epoch, the function will fetch a batch of training examples (in this case, 64) and then use them to compute the gradient update. The parameters are updated after the
 gradient is computed. Finally, we can supply a set of validation data (in this case, `(test_X, test_y)`. After each training epoch, Keras evaluates the model's performance using the validation data.
 
-__Remark__: the `fit` function essentially implements mini-batch SGD and its variants. A _training step_ is performed when one batch of training examples are used to update the parameters. Once all batches of training examples are used, the training finishes one _training epoch_.
+The following code block demonstrates the training procedure.
+Note that we omitted the log printing and loss statistics collection
+for its simplicity.
 
-__Remark__: The `fit` function is not the only way you can do training, when you are dealing with a larger dataset or have some preprocessing for the data, you can use `fit_generator` to schedule your training.
+```python
+num_epochs = 10
+for epoch_i in range(num_epochs):
+    for batch_i, (batch_x, batch_y) in enumerate(train_dataset):
+        # turn on the model training mode
+        # parameters can be updated
+        model.train()
+
+        # prepare the optimizer
+        optimizer.zero_grad()
+
+        # calculate the prediction
+        batch_y_pred = model(batch_x)
+        # calculate the training loss for this batch
+        batch_loss_output = loss_fn(batch_y_pred, batch_y)
+        # calculate the training accuracy for this batch
+        batch_metric_output = Accuracy(batch_y, (batch_y_pred > 0.5))
+        
+        # compute the gradients respect to the parameters
+        batch_loss_output.backward()
+
+        # the optimizer updates the parameters
+        optimizer.step()
+
+    for batch_i, (batch_x, batch_y) in enumerate(valid_dataset):
+        # turn on the evaluation mode
+        model.eval()
+
+        # make sure no gradients are calculated
+        with torch.no_grad():
+            # compute the prediction
+            batch_y_pred = model(batch_x)
+            # compute the validation loss for this batch
+            batch_loss_output = loss_fn(batch_y_pred, batch_y)
+            # compute the validation accuracy for this batch
+            batch_metric_output = Accuracy(batch_y, (batch_y_pred > 0.5))
+```
 
 ## Generalization
 
 Typically, we expect that the trained model can be used to predict _new, unseen samples_. This ability to perform well on previously unobserved data is called _generalization_. With a performance measure $$P$$, we can compute the error that is made over the training dataset. This error is called _training error_. We can also compute the _testing error_ with the validation dataset or the testing dataset if available. This _testing error_ quantifies the level of
 generalization of a certain model. Our goal is to minimize this _testing error_ and improve the generalization.
 
-Because we can only observe the training dataset during training, our trained model may suffer from either _overfitting_ or _underfitting_. Overfitting occurs when the gap between the training error and testing error is too large. Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training dataset.
+Because we can only observe the training dataset during training, our trained model may suffer from either _overfitting_ or _underfitting_. Overfitting occurs when the gap between the training error and testing error is increasing. Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training dataset.
 
 We can control whether a model is more likely to overfit or underfit by altering its _capacity_. Informally, a model's capacity is its ability to fit a wide variety of functions. Ideally, we want to find a model that has the optimal capacity where the model generates the smallest gap between the training error and the testing error.
 
@@ -383,31 +492,9 @@ __Remark__: For an elaborated description of these two challenges, please refer 
 
 In this exercise, you will need to implement Logistic Regression to distinguish two classes from the [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset.
 
-We provide some useful functions for accessing the Fashion-MNIST datasets in `pnslib`, please first clone and install the `pnslib` by:
-
-```bash
-$ git clone https://github.com/PnS2019/pnslib
-$ cd pnslib
-$ python setup.py develop  # add sudo in front if there is a permission error.
-```
-
-__Remark__: You can skip this step if you're using Raspberry Pi we prepared for you. On Colaboratory, you can use the following line to install `pnslib`:
-
-```bash
-# install pnslib
-!pip install git+git://github.com/PnS2019/pnslib.git
-```
-
-Note that we are going to use `pnslib` package for both exercises and projects in future. You will need to update the package for the latest changes.
-
-```bash
-$ cd pnslib
-$ git pull origin master
-```
-
 If you decide to use Colaboratory to complete the exercise, please follow the description at [here](./colab-intro.md).
 
-1. We provide a [template script](./res/code/logistic-regression-with-keras-layers-template.py) that has the barebone structure of implementing Logistic Regression in Keras. You will need to complete the script and get it running. You are expected to define a Logistic Regression model, compile the model with binary cross-entropy loss and an optimizer, and train the model. If you can successfully train the model, try to change the choice of optimizer, what do you observe?
+1. We provide a [template script](./res/pt-code/logistic-regression-with-keras-layers-template.py) that has the barebone structure of implementing Logistic Regression in PyTorch. You will need to complete the script and get it running. You are expected to define a Logistic Regression model, compile the model with binary cross-entropy loss and an optimizer, and train the model. If you can successfully train the model, try to change the choice of optimizer, what do you observe?
 
-2. (Optional) In this exercise, you will implement the Logistic Regression from scratch. We provide a [template script](./res/code/logistic-regression-basic-template.py) that contains necessary setup code, you need to complete the code and run.
+2. (Optional) In this exercise, you will implement the Logistic Regression from scratch. We provide a [template script](./res/pt-code/logistic-regression-basic-template.py) that contains necessary setup code, you need to complete the code and run.
 You are expected to write a training loop that can loop over the data for some number of epochs.
