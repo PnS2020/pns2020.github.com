@@ -13,9 +13,15 @@ You can learn how to use `Git` in 15 steps!
 The main purpose of having such a system is to maintain the code changes.
 With Git, you can track the history, save yourself from a post-catastrophic situation (e.g, the precious laptop is destroyed because you ate in front of it), integrate the work from others, make a copy of existing work along with all the history, and many other useful features.
 
+## If you are not a fan of terminal
+
+The following content of this page navigates yourself to be familiar with
+the command of Git. However, you may not be a fan of terminal and that
+is absolutely fine. You can download the [GitHub Desktop](https://desktop.github.com/) client here and have fun!
+
 ## Clone, commit and push!
 
-Suppose you have a directory that hots your project, you can initialize a Git environment by the following command:
+Suppose you have a directory that hosts your project, you can initialize a Git environment by the following command:
 
 ```
 $ git init
@@ -26,14 +32,15 @@ The above command only initializes the local Git environment where you can updat
 The other way of working on a project is to `clone`. This is in fact the most common situation where you have a project on the remote server and you would like to work on it with your own personal computer. To do so, you need to download the project using `git clone` command:
 
 ```
-$ git clone https://github.com/PnS2018/git-hello-world
+$ git clone https://github.com/PnS2020/git-hello-world
 ```
 
 Note that `git clone` not only downloads the project, but also configure the remote connections. Hence, if you have any modifications (e.g., commits) to the project, you can now `push` to the remote server.
 
-Following lines demonstrate how you can stage your first file:
+Following lines demonstrate how you can push your first file:
 
 ```bash
+$ cd git-hello-world  # navigate into the folder
 $ touch hello-world.txt  # create a file named hello-world.txt
 $ echo "Hello World!" > hello-world.txt  # append the string "Hello World!" to the document
 $ git add hello-world.txt  # Add (stage) the file so that git can track it

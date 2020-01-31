@@ -24,6 +24,9 @@ This module instructs students on the basics of deep learning as well as buildin
 + __Place__: Institute of Neuroinformatics, Dungeon Lab, Y35 E 30, University Zürich Irchel Campus
 + __Module ends__: TBD
 
+# [Session 00](./session_00.md)
+Setup for this module.
+
 # [Session 01](./session_01.md)
 Basics of Linear Algebra (vector, matrix, tensors, etc), introduction to Python, `numpy` basics, symbolic computation basics.
 
